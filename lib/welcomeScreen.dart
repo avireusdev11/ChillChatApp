@@ -23,9 +23,12 @@ class _welcomeScreenState extends State<welcomeScreen> {
                 Row(
                   children: [
                     SizedBox(width:135),
-                    Container(
-                      child: Image.asset('image/logo.png'),
-                      height:60.0,
+                    Hero(
+                      tag:'logo',
+                      child: Container(
+                        child: Image.asset('image/logo.png'),
+                        height:60.0,
+                      ),
                     ),
                     Text(
                       'Chat',
