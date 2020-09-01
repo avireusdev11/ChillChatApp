@@ -27,11 +27,13 @@ class _loginState extends State<login> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Hero(
-                  tag: 'logo',
-                  child: Container(
-                    child: Image.asset('image/logo.png'),
-                    height: 100.0,
+                Flexible(
+                  child: Hero(
+                    tag: 'logo',
+                    child: Container(
+                      child: Image.asset('image/logo.png'),
+                      height: 100.0,
+                    ),
                   ),
                 ),
                 Container(

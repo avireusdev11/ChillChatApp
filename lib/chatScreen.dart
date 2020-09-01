@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'buttonn.dart';
-
+import 'messageStream.dart';
 final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;
 
@@ -15,6 +16,7 @@ class _chatScreenState extends State<chatScreen> {
   final _auth = FirebaseAuth.instance;
   String message;
   String mail;
+  final messageTextController=TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -58,52 +60,15 @@ class _chatScreenState extends State<chatScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('messages').snapshots(),
-              // ignore: missing_return
-              builder: (BuildContext context, snapshot) {
-                if (snapshot.hasData) {
-                  final messages = snapshot.data.documents;
-                  List<Text> messageWidgets = [];
-                  for (var mess in messages) {
-                    final messageText = mess.get('text');
-                    final messageSender = mess.get('sender');
-                    final messageWidget = Text('$messageText from $messageSender');
-                    messageWidgets.add(messageWidget);
-                  }
-                  return Column(
-                    children: messageWidgets,
-                  );
-                }
-              },
-              /*builder: (context,snapshot){
-                if(snapshot.hasData)
-                  {
-                    final messages=snapshot.data.documents;
-                    List<Widget> messageWidgets=[];
-                    for(var message in messages){
-                      final messageText=message.data['text'];
-                      final messageSender=message.data['sender'];
-                      final messageWidget=Text('$message from $messageSender');
-                      messageWidgets.add(messageWidget);
-                    }
-                    return Column(
-                      children: [
-                        messageWidgets,
-                      ],
-                    );
-                  }
-              },*/
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            messageStream(),
             Container(
               child: Row(
                 children: [
                   Expanded(
                     child: Container(
+                      width: 2000,
                       child: TextField(
+                        controller: messageTextController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -115,12 +80,13 @@ class _chatScreenState extends State<chatScreen> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Container(
+                  Container(
+                    width:90,
                       child: button(
                         chilld: Text('Send'),
                         colour: Color(0xff4285F4),
                         onpress: () {
+                          messageTextController.clear();
                           _firestore.collection('messages').add({
                             'text': message,
                             'sender': mail,
@@ -128,7 +94,6 @@ class _chatScreenState extends State<chatScreen> {
                         },
                       ),
                     ),
-                  ),
                   /*Container(
                   child:
                 ),*/
