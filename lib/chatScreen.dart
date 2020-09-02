@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'buttonn.dart';
 import 'messageStream.dart';
+
 final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;
 
@@ -16,7 +17,7 @@ class _chatScreenState extends State<chatScreen> {
   final _auth = FirebaseAuth.instance;
   String message;
   String mail;
-  final messageTextController=TextEditingController();
+  final messageTextController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -50,12 +51,22 @@ class _chatScreenState extends State<chatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff394263),
       appBar: AppBar(
         title: Text(
           "chillChat",
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await _auth.signOut();
+              Navigator.pushNamed(context, '/');
+            },
+            icon: Icon(Icons.remove),
+          )
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -68,6 +79,7 @@ class _chatScreenState extends State<chatScreen> {
                     child: Container(
                       width: 2000,
                       child: TextField(
+                        style: TextStyle(color: Colors.white),
                         controller: messageTextController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -81,19 +93,23 @@ class _chatScreenState extends State<chatScreen> {
                     ),
                   ),
                   Container(
-                    width:90,
-                      child: button(
-                        chilld: Text('Send'),
-                        colour: Color(0xff4285F4),
-                        onpress: () {
-                          messageTextController.clear();
-                          _firestore.collection('messages').add({
-                            'text': message,
-                            'sender': mail,
-                          });
-                        },
+                    width: 90,
+                    child: button(
+                      chilld: Text(
+                        'Send',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
+                      colour: Color(0xff4285F4),
+                      onpress: () {
+                        messageTextController.clear();
+                        _firestore.collection('messages').add({
+                          'text': message,
+                          'sender': mail,
+                          'date': DateTime.now().toIso8601String().toString(),
+                        });
+                      },
                     ),
+                  ),
                   /*Container(
                   child:
                 ),*/

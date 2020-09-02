@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:chillchat/welcomeScreen.dart';
@@ -5,7 +6,9 @@ import 'login.dart';
 import 'Register.dart';
 import 'chatScreen.dart';
 
-void main() async{
+final _auth = FirebaseAuth.instance;
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -23,9 +26,9 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         '/': (context) => welcomeScreen(),
-       '/registration':(context)=>registration(),
-        '/login':(context)=>login(),
-        '/chat':(context)=>chatScreen(),
+        '/registration': (context) => registration(),
+        '/login': (context) => login(),
+        '/chat': (context) => chatScreen(),
       },
     );
   }

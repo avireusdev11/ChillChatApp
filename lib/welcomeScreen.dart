@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'buttonn.dart';
-import 'login.dart';
-import 'main.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class welcomeScreen extends StatefulWidget {
   @override
@@ -10,66 +9,75 @@ class welcomeScreen extends StatefulWidget {
 }
 
 class _welcomeScreenState extends State<welcomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xff394263),
       body: Center(
         child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    SizedBox(width:135),
-                    Hero(
-                      tag:'logo',
-                      child: Container(
-                        child: Image.asset('image/logo.png'),
-                        height:60.0,
-                      ),
-                    ),
-                    Text(
-                      'Chat',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40.0,
-                      ),
-                    ),
-
-
-                  ],
+                SizedBox(width: 50),
+                Hero(
+                  tag: 'logo',
+                  child: Container(
+                    child: Image.asset('image/logo.png'),
+                    height: 100.0,
+                  ),
                 ),
-                SizedBox(height:10.0),
-                button(
-                  chilld: Text('Login',
-                    style: TextStyle(
-                      color: Colors.black,
+                Flexible(
+                  child: TyperAnimatedTextKit(
+                    text: ['ChillChat'],
+                    speed: Duration(milliseconds: 300),
+                    textStyle: TextStyle(
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
-                    ),),
-                  colour: Colors.white,
-                  onpress: (){
-                    Navigator.pushNamed(context, '/login');
-                  },
+                      fontSize: 60.0,
+                    ),
+                  ),
                 ),
-                SizedBox(height: 10.0,),
-                button(
-                  chilld: Text('Register',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),),
-                  onpress: (){
-                    Navigator.pushNamed(context, '/registration');
-                  },
-                  colour: Color(0xffa525fe),
-                ),
-
               ],
             ),
+            SizedBox(height: 50.0),
+            button(
+              chilld: Text(
+                'Login',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              colour: Color(0xff0ffa525fe),
+              onpress: () {
+                Navigator.pushNamed(context, '/login');
+              },
+            ),
+            SizedBox(
+              height: 50.0,
+            ),
+            button(
+              chilld: Text(
+                'Register',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              onpress: () {
+                Navigator.pushNamed(context, '/registration');
+              },
+              colour: Color(0xffa525fe),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-

@@ -2,13 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'messagebubble.dart';
+
 final _auth = FirebaseAuth.instance;
 final _firestore = Firestore.instance;
+
 class messageStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('messages').snapshots(),
+      stream: _firestore.collection('messages').orderBy('date').snapshots(),
       // ignore: missing_return
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasData) {
@@ -29,7 +31,6 @@ class messageStream extends StatelessWidget {
           );
         }
       },
-
     );
   }
 }

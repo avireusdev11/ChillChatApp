@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class button extends StatelessWidget {
-  button({this.chilld,this.colour, @required this.onpress});
+  button({this.chilld, this.colour, @required this.onpress});
   final Widget chilld;
   final Color colour;
   final Function onpress;
